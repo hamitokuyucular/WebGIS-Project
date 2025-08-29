@@ -1,0 +1,12 @@
+[
+  {
+    "layer": "TOPO-OSM-WMS",
+    "name": "bilmem ne",
+    "url": "http://ows.mundialis.de/services/service?"
+  },
+  {
+    "layer": "nexrad-n0r-900913",
+    "name": "Weather data © 2012 IEM Nexrad",
+    "url": "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi"
+  }
+]
