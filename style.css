@@ -2,10 +2,11 @@ body {
   margin: 0; padding: 0; display: flex; height: 100vh; font-family: system-ui, Arial, sans-serif;
 }
 #sidebar {
-  width: 300px; 
+  width: 380px; 
   background: #f7f7f9; 
   padding: 16px; 
   border-right: 1px solid #e3e3e3;
+  overflow-y: auto;
 }
 #map { 
   flex: 1;
@@ -14,28 +15,47 @@ body {
 }
 h3 {
   margin: 0 0 2px;
-  font-size: 18px;
+  font-size: 20px;
 }
 .btn.btn-outline-secondary{
   margin-bottom: 5px;
-  width: 100%;
+  width: 80%;
   text-align: left;
   border-radius: 12px;
+}
+.hidden {
+    display: none !important;
 }
 #layer-list > div{
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 4px 0;
+  margin-right: 75px;
 }
 .layer-name{
   max-width: 142px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 10px; /* butonlarla boşluk */
+  margin-right: 10px;
 }
 #layer-list span{
-    display: flex;
+  display: flex;
   gap: 5px;
+}
+#event-select{
+  margin-top: 5px;
+  font-size: 17px;
+}
+#event-select label {
+  cursor: pointer;
+  margin-top: 8px;
+}
+#event-select label input{
+  margin-right: 5px;
+}
+select.form-select:focus {
+border-color: #6c757d;
+box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
 }
