@@ -31,14 +31,13 @@ h3 {
   justify-content: space-between;
   align-items: center;
   margin: 4px 0;
-  margin-right: 75px;
+  margin-right: 60px;
 }
 .layer-name{
-  max-width: 142px;
+  max-width: 122px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 10px;
 }
 #layer-list span{
   display: flex;
@@ -58,4 +57,7 @@ h3 {
 select.form-select:focus {
 border-color: #6c757d;
 box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+#results > p {
+  margin-bottom: 0.4rem;
 }
