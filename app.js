@@ -120,8 +120,8 @@ function aditLayerListDiv () {
     layerItem.innerHTML = `
       <div class="layer-name">${layerInfo.name}</div>
       <div class="layer-actions">
-          <button class="zoom-layer" data-index="${index}">Zoom</button>
-          <button class="remove-layer" data-index="${index}">Kaldır</button>
+        <button class="zoom-layer btn btn-primary" data-index="${index}">Zoom</button>
+        <button class="remove-layer btn btn-danger" data-index="${index}">Kaldır</button>
       </div>
     `;
     layerList.appendChild(layerItem);
@@ -301,7 +301,8 @@ function analysisResults(features, analysisType, targetLayerName) {
   if (features.length > 0) {
     results.innerHTML += '<p><strong>Özellikler:</strong></p>';
 
-    const resultsTable = document.createElement("table")
+    const resultsTable = document.createElement("table");
+    resultsTable.classList.add("table", "table-bordered","border-dark")
     const rowTitles = document.createElement("tr");
 
     const properties = Object.keys(features[0].properties);
