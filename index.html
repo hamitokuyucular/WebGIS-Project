@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YENİ</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="yeni_style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/shpjs@latest/dist/shp.min.js"></script>
@@ -45,13 +45,23 @@
 
     <div id="div-analysis" class="hidden" style="margin-top: 8px;">
 
-      <h3 class="fw-bolder">Analiz Seçenekleri</h3>
-      <label style="cursor: auto">Hedef Katman:</label>
-      <select name="target-layer" id="target-layer" class="form-select form-select-m" style="margin-bottom: 8px; width: 80%;">
+      <div style="max-width: 250px;">
+          <h6>Analiz Kullanım Kılavuzu:</h6>
+          <ul>
+              <li>Önce harita üzerinden bir geometri seçin (kaynak)</li>
+              <li>Hedef katmanı seçin</li>
+              <li>Analiz türünü seçin</li>
+              <li>Sonuçlar harita ve panelde gösterilecektir</li>
+          </ul>
+      </div>
+      
+      <h6 style="cursor: auto">Hedef Katman:</h6>
+      <select name="target-layer" id="target-layer" class="form-select form-select-m" style="margin-bottom: 16px; width: 80%;">
         <option selected>Katman seçin</option>
       </select>
 
       <div>
+        <h6>Analiz Seçenekleri:</h6>
         <button class="btn btn-outline-secondary fw-bolder" id="within-btn">
           Within
         </button>
@@ -76,7 +86,7 @@
 
   <div id="map"></div>
 
-  <script src="app.js"></script>
+  <script src="yeni_app.js"></script>
 
 </body>
 </html>
