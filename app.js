@@ -50,6 +50,9 @@ function fileLoader(e){
       addGeojsonToMap(geojson, file.name);
     }
     loadShapefile(file)
+  
+  } else {
+    alert("Lütfen GeoJSON veya ZIP (shapefile için) formatında bir dosya yükleyin.")
   }
 }
 
@@ -173,6 +176,8 @@ function selectFeatureForAnalysis(layer, feature){
 
   selectedFeatureView(layer);
   map.fitBounds(layer.getBounds());
+
+  alert('Analiz için bir özellik seçildi. Şimdi hedef katmanı seçip analiz türünü belirleyiniz.');
 }
 
 function Modes(){
@@ -208,7 +213,7 @@ function selectedFeatureView(layer) {
     if (geometryType == 'Point' || geometryType == 'MultiPoint') {
       layer.setStyle({
         radius: 6,
-        weight: 1,
+        weight: 2,
         color: 'black',
         fillColor: 'red',
         fillOpacity: 0.7
@@ -216,7 +221,7 @@ function selectedFeatureView(layer) {
     } else {
       layer.setStyle({
         color: 'red',
-        weight: 1
+        weight: 2
       })
     }
   }
@@ -233,20 +238,20 @@ function executeAnalysis(analysisType) {
   const targetLayerInfo = savedLayers.find(
     layer => layer.name == targetLayerName
   );
-
+  
   let resultsFeatures = []
-
+    
   const selectedFeature_Truf = turf.feature(
     selectedFeature.geometry,
     selectedFeature.properties
   );
-
+  
   targetLayerInfo.geojson.features.forEach(targetFeature => {
     const targetFeature_Turf = turf.feature(
       targetFeature.geometry,
       targetFeature.properties
     );
-
+    
     if (analysisType == "within") {
       if (turf.booleanWithin(targetFeature_Turf, selectedFeature_Truf)) {
         resultsFeatures.push(targetFeature);
