@@ -1,0 +1,30 @@
+{
+"type": "FeatureCollection",
+"features": [
+{
+    "type": "Feature",
+    "properties": { "id": 1, "name": "İstanbul", "type": "Büyükşehir", "nüfus": 15462452 },
+    "geometry": { "type": "Point", "coordinates": [28.975, 41.012] }
+},
+{
+    "type": "Feature",
+    "properties": { "id": 2, "name": "Ankara", "type": "Büyükşehir", "nüfus": 5663322 },
+    "geometry": { "type": "Point", "coordinates": [32.856, 39.933] }
+},
+{
+    "type": "Feature",
+    "properties": { "id": 3, "name": "İzmir", "type": "Büyükşehir", "nüfus": 4367251 },
+    "geometry": { "type": "Point", "coordinates": [27.142, 38.418] }
+},
+{
+    "type": "Feature",
+    "properties": { "id": 4, "name": "Bursa", "type": "Büyükşehir", "nüfus": 3056120 },
+    "geometry": { "type": "Point", "coordinates": [29.058, 40.266] }
+},
+{
+    "type": "Feature",
+    "properties": { "id": 5, "name": "Antalya", "type": "Büyükşehir", "nüfus": 2548308 },
+    "geometry": { "type": "Point", "coordinates": [30.709, 36.887] }
+}
+]
+}

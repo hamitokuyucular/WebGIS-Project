@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "features": 
+  [
+      {
+          "type": "Feature",
+          "properties": { "id": 1, "name": "Marmara Bölgesi", "alan": "67.000 km²" },
+          "geometry": {
+              "type": "Polygon",
+              "coordinates": [[
+                  [27.5, 41.8], [29.0, 41.8], [30.0, 41.0], [30.0, 40.0], 
+                  [28.0, 40.0], [27.5, 40.5], [27.5, 41.8]
+              ]]
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": { "id": 2, "name": "Ege Bölgesi", "alan": "85.000 km²" },
+          "geometry": {
+              "type": "Polygon",
+              "coordinates": [[
+                  [26.0, 40.0], [28.5, 40.0], [29.0, 38.0], [27.0, 37.5], 
+                  [26.0, 38.5], [26.0, 40.0]
+              ]]
+          }
+      }
+  ]
+}
