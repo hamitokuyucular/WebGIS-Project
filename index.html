@@ -1,92 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebGIS Project</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/shpjs@latest/dist/shp.min.js"></script>
-  <script src="https://unpkg.com/georaster"></script>
-  <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-</head>
-<body>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebGIS Project</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/shpjs@latest/dist/shp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
 
-  <aside class="bg-light bg-gradient" id="sidebar">
-    <div class="d-grid gap-2">
-      <h3 class="fw-bolder">Veri Yükle</h3>
-      <div>
-        <div id="btn-group">
-          <button class="btn btn-outline-secondary fw-bolder" id="btn-geojson">GeoJSON (.json) Yükle</button>
-          <button class="btn btn-outline-secondary fw-bolder" id="btn-shp">Shapefile (.zip) Yükle</button>
-          <input type="file" id="file-input" accept=".geojson, .json, .zip" class="hidden"/>
+        <div class="load-data section">
+          <h3>Veri Yükle</h3>
+          <div id="btn-group">
+            <button id="btn-geojson" class="btn">GeoJSON Yükle (.json/.geojson)</button>
+            <button id="btn-shp" class="btn">Shapefile Yükle (.zip)</button>
+            <input type="file" id="file-input" accept=".geojson, .json, .zip" class="hidden">
+          </div>
         </div>
-      </div>
 
-    <div>
-      <h3 class="fw-bolder">Katman Listesi</h3>
-      <div id="layer-list">
-        <div>
-          <p>Katman listesi boş. Görüntülemek veya analiz yapmak için veri yükeyin.</p>
+        <div class="section">
+          <h3>Katman Listesi</h3>
+          <div id="layer-list">
+            <p>Katman listesi boş. Görüntülemek veya analiz yapmak için veri yükleyin.</p>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div id="event-select">
-      <h3 class="fw-bolder">Olay Seçimi</h3>
-      <label style="margin-right: 20px;" ><input type="radio" name="select" id="info-mode" checked/>İnceleme Modu</label>
-      <label><input type="radio" name="select" id="analysis-mode"/>Analiz Modu</label>
-    </div>
+        <div id="event-select" class="section">
+          <h3>Olay Seçimi</h3>
+          <label><input type="radio" name="select" id="info-mode" checked>İnceleme Modu</label>
+          <label><input type="radio" name="select" id="analysis-mode">Analiz Modu</label>
+        </div>
 
-    <div id="div-analysis" class="hidden" style="margin-top: 8px;">
-
-      <div style="max-width: 250px;">
-          <h6>Analiz Kullanım Kılavuzu:</h6>
-          <ul>
+        <div id="div-analysis" class="section hidden">
+          <div class="analysis-section">
+            <h3>Analiz Yönetimi</h3>
+            <h5>Analiz Kullanım Kılavuzu</h5>
+            <ul style="margin-top: 0px;">
               <li>Önce harita üzerinden bir geometri seçin (kaynak)</li>
               <li>Hedef katmanı seçin</li>
               <li>Analiz türünü seçin</li>
               <li>Sonuçlar harita ve panelde gösterilecektir</li>
-          </ul>
-      </div>
-      
-      <h6 style="cursor: auto">Hedef Katman:</h6>
-      <select name="target-layer" id="target-layer" class="form-select form-select-m" style="margin-bottom: 16px; width: 80%;">
-        <option selected>Katman seçin</option>
-      </select>
+            </ul>
+          </div>
 
-      <div>
-        <h6>Analiz Seçenekleri:</h6>
-        <button class="btn btn-outline-secondary fw-bolder" id="within-btn">
-          Within
-        </button>
-        <button class="btn btn-outline-secondary fw-bolder" id="intersect-btn">
-          Intersection
-        </button>
-      </div>
+          <div class="analysis-section">
+            <h5>Hedef Katman:</h5>
+            <select name="target-layer" id="target-layer">
+              <option selected>Katman seçin</option>
+            </select>
+          </div>
 
-      <div id="result-div" style="margin-top: 8px;" class="hidden">
-        <h3 class="fw-bolder">Analiz sonuçları</h3>
-        <div id="results" class="results">
-          <!-- ANALİZ SONUÇLARI -->
+          <div class="analysis-section">
+            <h5>Analiz Seçenekleri:</h5>
+            <button id="within-btn" class="btn">Within</button>
+            <button id="intersect-btn" class="btn">İntersect</button>
+          </div>
+
+          <div id="result-div" class="hidden">
+            <h5>Analiz Sonuçları</h5>
+            <div id="results" class="results">
+              ANALİZ SONUÇLARI BURAYA GELECEK
+            </div>
+            <button id="download-results" class="btn hidden">
+              Sonuçları İndir (JSON)
+            </button>
+            <button id="clear-results" class="btn hidden">
+                <i>🧹</i> Sonuçları Temizle
+            </button>
+          </div>
+
         </div>
-        <button id="download-results" class="btn btn-success hidden">
-          Sonuçları İndir (JSON)
-        </button>
-      </div>
 
+      </aside>
+
+      <div id="map"></div>
     </div>
 
-  </aside>
-
-  <div id="map"></div>
-
-  <script src="app.js"></script>
-
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
