@@ -102,7 +102,6 @@ function addGeojsonToMap(geojson, name){
   editTargetLayerSelect();
 }
 
-
 const layerList = document.getElementById("layer-list")
 
 function aditLayerListDiv () {
@@ -123,8 +122,8 @@ function aditLayerListDiv () {
     layerItem.innerHTML = `
       <div class="layer-name">${layerInfo.name}</div>
       <div class="layer-actions">
-        <button class="zoom-layer btn btn-primary" data-index="${index}">Zoom</button>
-        <button class="remove-layer btn btn-danger" data-index="${index}">Kaldır</button>
+        <button class="zoom-layer btn" data-index="${index}">Zoom</button>
+        <button class="remove-layer btn" data-index="${index}">Kaldır</button>
       </div>
     `;
     layerList.appendChild(layerItem);
@@ -180,16 +179,28 @@ function selectFeatureForAnalysis(layer, feature){
   alert('Analiz için bir özellik seçildi. Şimdi hedef katmanı seçip analiz türünü belirleyiniz.');
 }
 
+let analysisResultsAddToMap = null;
+
 function Modes(){
   if (analysisMode.checked) {
     analysisDiv.classList.remove('hidden');
 
     if (selectedLayer) {
-      selectedLayer = null
-      selectedFeature = null
+      resetLayerStyle(selectedLayer);
+      selectedLayer = null;
+      selectedFeature = null;
     }
   } else {
     analysisDiv.classList.add('hidden')
+    if (analysisResultsAddToMap){
+      map.removeLayer(analysisResultsAddToMap);
+      analysisResultsAddToMap = null;
+    }
+    resultsDiv.classList.add('hidden');
+  }
+  if (!analysisModeRadio.checked) {
+    // ...
+    clearAnalysisResults();
   }
 }
 
@@ -205,7 +216,6 @@ function editTargetLayerSelect() {
     targetLayerSelect.appendChild(option);
   });
 }
-
 
 function selectedFeatureView(layer) {
   if (layer.feature && layer.feature.geometry) {
@@ -307,7 +317,7 @@ function analysisResults(features, analysisType, targetLayerName) {
     results.innerHTML += '<p><strong>Özellikler:</strong></p>';
 
     const resultsTable = document.createElement("table");
-    resultsTable.classList.add("table", "table-bordered","border-dark")
+    resultsTable.classList.add("table")
     const rowTitles = document.createElement("tr");
 
     const properties = Object.keys(features[0].properties);
@@ -318,7 +328,7 @@ function analysisResults(features, analysisType, targetLayerName) {
     });
     resultsTable.appendChild(rowTitles);
 
-    features.slice(0,5).forEach(feature => {
+    features.forEach(feature => {
       const row = document.createElement("tr");
       properties.forEach(prop => {
         const td = document.createElement("td");
@@ -334,4 +344,45 @@ function analysisResults(features, analysisType, targetLayerName) {
     resultsDownloadBtn.classList.add('hidden');
   }
   resultsDiv.classList.remove('hidden');
+  clearResultsBtn.classList.remove('hidden');
+}
+
+const clearResultsBtn = document.getElementById('clear-results');
+clearResultsBtn.addEventListener('click', clearAnalysisResults);
+
+function clearAnalysisResults() {
+    if (analysisResultsAddToMap) {
+      try { map.removeLayer(analysisResultsAddToMap); } catch(e) {}
+      analysisResultsAddToMap = null;
+    }
+    if (selectedLayer) {
+      try { resetLayerStyle(selectedLayer); } catch(e) {}
+    }
+    selectedLayer = null;
+    selectedFeature = null;
+    results.innerHTML = '';
+    resultsDiv.classList.add('hidden');
+    downloadResultsBtn.classList.add('hidden');
+    clearResultsBtn.classList.add('hidden');
+    targetLayerSelect.selectedIndex = 0;
+}
+
+function resetLayerStyle(layer) {
+  if (layer.feature && layer.feature.geometry) {
+    const geometryType = layer.feature.geometry.type;
+    if (geometryType == 'Point' || geometryType == 'MultiPoint') {
+      layer.setStyle({
+        radius: 6,
+        weight: 2,
+        color: 'black',
+        fillColor: 'red',
+        fillOpacity: 0.7
+      });
+    } else {
+      layer.setStyle({
+        color: 'red',
+        weight: 2
+      })
+    }
+  }
 }
